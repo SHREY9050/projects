@@ -45,6 +45,15 @@ spring.datasource.password=secret
 spring.jpa.hibernate.ddl-auto=update
 ```
 
+🌐 Production (your real setup)
+Always uses Neon PostgreSQL cloud.
+
+Connection string looks like:
+
+Code
+jdbc:postgresql://ep-<cluster-id>.aws.neon.tech/fitness?sslmode=require
+Credentials (DB_URL, DB_USER, DB_PASSWORD) are injected via environment variables in Render.
+
 ### Cloud Deployment
 In production, database credentials are injected via environment variables:
 - `DB_URL` → Neon connection string (e.g. `jdbc:postgresql://<neon-host>/<db-name>`)
