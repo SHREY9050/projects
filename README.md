@@ -1,0 +1,34 @@
+# 🚀 Projects Repository
+
+This repository contains multiple projects developed by **Shrey**.  
+Each project has its own folder and dedicated README with setup instructions.
+
+---
+
+## 📂 Projects
+
+### 1. Fitness Monolith App
+- **Type**: Spring Boot monolithic backend
+- **Version**: v1.0
+- **Database**: Neon PostgreSQL (cloud-hosted)
+- **Deployment**: Render
+- **Docs**: OpenAPI 3.1 (Swagger UI)
+- **Live URL**: [Swagger UI](https://fitness-mono-1-136j.onrender.com/swagger-ui/index.html)
+
+👉 Detailed instructions: [Fitness Monolith App README](./Fitness%20Monolith%20App/README.md)
+
+---
+
+### 2. Smart Email AI Assistant
+- **Type**: AI-powered email assistant
+- **Tech Stack**: Likely Python/ML + integrations (details in project README)
+- **Features**: Automates email drafting, smart replies, and productivity workflows
+
+👉 Detailed instructions: [Smart Email AI Assistant README](./Smart%20Email%20AI%20Assistant/README.md)
+
+---
+
+## 🛠️ How to Use
+- Clone the repo:
+  ```bash
+  git clone https://github.com/SHREY9050/projects.git
