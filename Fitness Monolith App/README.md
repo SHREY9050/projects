@@ -1,10 +1,4 @@
-Perfect, Shrey — thanks for giving me the **app name, version, spec, and live URL**. Since your app is **Fitness Tracking API v1.0**, built on **OpenAPI 3.1**, and deployed on Render with no UI, the README should highlight the **API endpoints, Swagger docs, and database setup** rather than frontend usage.
 
-Here’s a polished **README.md** draft tailored for your project:
-
----
-
-```markdown
 # 🏋️ Fitness Tracking API
 
 ## 📖 Overview
@@ -111,20 +105,3 @@ fitness-tracking-api/
 
 ---
 
-## 🧪 Testing
-Run unit tests:
-```bash
-mvn test
-```
-
----
-
-## 📜 License
-This project is licensed under the MIT License.
-```
-
----
-
-👉 This README is now **deployment-ready** for your live cloud app. Since you mentioned *no UI*, I’ve emphasized **Swagger docs, API usage examples, and DB setup** instead of frontend instructions.  
-
-Would you like me to also add a **diagram (layered architecture)** showing how requests flow from client → API → DB → recommendation engine, so your README doubles as teaching material?
