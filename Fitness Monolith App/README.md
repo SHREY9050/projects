@@ -1,5 +1,5 @@
 
-# 🏋️ Fitness Tracking API
+# 🏋️ Fitness Tracking API v1.0
 
 ## 📖 Overview
 Fitness Tracking API is a **Spring Boot monolithic backend** application for fitness tracking.  
@@ -12,7 +12,7 @@ The API is documented using **OpenAPI 3.1** and exposed via **Swagger UI**.
 - User registration and authentication (JWT-based)
 - Activity tracking (running, walking, cycling, etc.)
 - Personalized fitness recommendations
-- Cloud deployment with persistent MySQL database
+- Cloud deployment with Neon PostgreSQL database
 - Auto-generated API documentation with Swagger UI
 
 ---
@@ -26,7 +26,7 @@ The API is documented using **OpenAPI 3.1** and exposed via **Swagger UI**.
 
 ## 🛠️ Tech Stack
 - **Backend**: Spring Boot (Web, Security, Data JPA)
-- **Database**: MySQL (cloud-hosted)
+- **Database**: Neon PostgreSQL (cloud-hosted)
 - **Documentation**: SpringDoc OpenAPI Starter Webmvc UI
 - **Build Tool**: Maven
 - **Language**: Java 17+
@@ -34,20 +34,20 @@ The API is documented using **OpenAPI 3.1** and exposed via **Swagger UI**.
 ---
 
 ## 🗄️ Database Setup
-The app uses **MySQL** as its primary database.
+The app uses **PostgreSQL (Neon cloud)** as its primary database.
 
 ### Local Development
 Update `src/main/resources/application.properties`:
 ```properties
-spring.datasource.url=jdbc:mysql://localhost:3306/fitness_db
-spring.datasource.username=root
+spring.datasource.url=jdbc:postgresql://localhost:5432/fitness
+spring.datasource.username=postgres
 spring.datasource.password=secret
 spring.jpa.hibernate.ddl-auto=update
 ```
 
 ### Cloud Deployment
 In production, database credentials are injected via environment variables:
-- `DB_URL`
+- `DB_URL` → Neon connection string (e.g. `jdbc:postgresql://<neon-host>/<db-name>`)
 - `DB_USER`
 - `DB_PASSWORD`
 
@@ -101,6 +101,46 @@ fitness-tracking-api/
  │    └── config       # Security & Swagger config
  └── src/main/resources
       └── application.properties
+```
+
+---
+
+## 🐳 Docker Setup
+
+### Dockerfile
+```dockerfile
+# Stage 1: Build the JAR
+FROM maven:3.9.6-eclipse-temurin-17 AS build
+WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
+
+# Stage 2: Run the JAR
+FROM eclipse-temurin:17-jdk-alpine
+WORKDIR /app
+COPY --from=build /app/target/fitness-tracking-api-*.jar app.jar
+
+# Expose port
+EXPOSE 8080
+
+# Environment variables for Neon DB
+ENV DB_URL=jdbc:postgresql://<neon-host>/<db-name>
+ENV DB_USER=<username>
+ENV DB_PASSWORD=<password>
+
+# Run the application
+ENTRYPOINT ["java","-jar","app.jar"]
+```
+
+### Build & Run
+```bash
+docker build -t fitness-tracking-api .
+docker run -p 8080:8080 \
+  -e DB_URL=jdbc:postgresql://localhost:5432/fitness \
+  -e DB_USER=postgres \
+  -e DB_PASSWORD=secret \
+  fitness-tracking-api
 ```
 
 ---
