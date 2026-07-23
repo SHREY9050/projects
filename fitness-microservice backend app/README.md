@@ -1,5 +1,4 @@
 
-```markdown
 # 🏋️ Fitness Microservices Backend
 
 This repository contains a **microservices-based fitness backend** built with Spring Boot, MongoDB, and Keycloak for authentication.  
@@ -26,7 +25,7 @@ It follows a modular architecture with separate services for user management, ac
 - **WebClient** (Inter-service communication)
 - **Gemini AI** (Recommendation engine)
 
----
+
 
 ## 🚀 Getting Started
 
