@@ -44,7 +44,7 @@ Each project has its own folder and dedicated README with setup instructions.
   - Secure authentication/authorization with Keycloak  
   - AI-driven activity recommendations  
 
-👉 Detailed instructions: [Fitness Microservices Backend App README](./fitness-microservice-backend-app/README.md)
+👉 Detailed instructions: [Fitness Microservices Backend App README](./fitness-microservice%20backend%20app/README.md)
 
 ---
 
