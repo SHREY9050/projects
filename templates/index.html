@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Phishing Message Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>🛡️ Phishing Message Checker</h1>
+        <p class="subtitle">AI‑Powered Phishing Detection</p>
+
+        <form method="POST">
+            <label for="message">Paste or type the suspicious message below:</label>
+            <textarea name="message" id="message" placeholder="Example: 'Your account has been locked. Click here to verify your information.'">{{ user_message }}</textarea>
+            <button type="submit">Analyze Message</button>
+        </form>
+
+        {% if result %}
+        <div class="results">
+            <h2>🔍 Analysis Report</h2>
+
+            {% if result.risk_level %}
+            <div class="verdict {{ result.risk_level|lower }}">
+                <div class="verdict-icon">
+                    {% if result.risk_level|lower == 'high' %}🚨
+                    {% elif result.risk_level|lower == 'medium' %}⚠️
+                    {% else %}✅{% endif %}
+                </div>
+                <div class="verdict-text">
+                    <span class="verdict-label">Risk Level</span>
+                    <span class="verdict-value">{{ result.risk_level }}</span>
+                </div>
+            </div>
+
+            <div class="detail-grid">
+                <div class="detail-card">
+                    <span class="detail-title">📋 Reason</span>
+                    <p>{{ result.reason }}</p>
+                </div>
+                <div class="detail-card">
+                    <span class="detail-title">🛠️ Recommended Action</span>
+                    <p>{{ result.advice }}</p>
+                </div>
+            </div>
+
+            {% elif result.error %}
+            <div class="card error">
+                <strong>Error:</strong> {{ result.error }}
+            </div>
+            {% else %}
+            <div class="card raw">
+                <strong>Raw response:</strong> {{ result.raw }}
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
