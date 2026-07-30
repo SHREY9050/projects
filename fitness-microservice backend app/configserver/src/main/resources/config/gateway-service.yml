@@ -1,0 +1,49 @@
+
+# The difference is property path:
+#  Old style → spring.cloud.gateway.routes (ignored in 5.x).
+#  New style → spring.cloud.gateway.server.webflux.routes (required in 5.x).
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
+
+# resource server -> A server providing data to third-party applicatiom
+
+spring:
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8181/realms/fitness-app/protocol/openid-connect/certs
+
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/users/**
+
+            - id: activity-service
+              uri: lb://ACTIVITY-SERVICE
+              predicates:
+                - Path=/api/activities/**
+
+            - id: ai-service
+              uri: lb://AI-SERVICE
+              predicates:
+                - Path=/api/recommendations/**
+
+#     http://localhost:8080/api/users/
+#     lb:// means load-balanced lookup via Eureka.
+#     lb scheme means:
+#👉 “Use the service name (USER-SERVICE) and resolve it through the LoadBalancer/Eureka registry.”
+
+server:
+  port: 8080
+
+
+
