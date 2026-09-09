@@ -1,0 +1,2 @@
+package com.fitflow.recommendations;import java.time.Instant;import java.util.*;import org.springframework.data.annotation.Id;import org.springframework.data.mongodb.core.mapping.Document;@Document("recommendations") public class Recommendation{@Id public String id;public String activityId;public String userId;public String type;public String summary;public List<String> improvements;public List<String> suggestions;public List<String> safety;public String source;public Instant createdAt=Instant.now();}
+
