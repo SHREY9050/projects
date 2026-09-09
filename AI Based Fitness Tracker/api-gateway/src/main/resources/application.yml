@@ -1,0 +1,18 @@
+server: { port: 8080 }
+spring:
+  application: { name: api-gateway }
+  config: { import: optional:configserver:http://localhost:8888 }
+  security:
+    oauth2:
+      resourceserver:
+        jwt: { issuer-uri: http://localhost:8180/realms/fitflow }
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - { id: users, uri: lb://user-service, predicates: [ "Path=/api/users/**" ] }
+            - { id: activities, uri: lb://activity-service, predicates: [ "Path=/api/activities/**,/api/dashboard/**" ] }
+            - { id: recommendations, uri: lb://recommendation-service, predicates: [ "Path=/api/recommendations/**" ] }
+eureka: { client: { service-url: { defaultZone: http://localhost:8761/eureka } } }
+
