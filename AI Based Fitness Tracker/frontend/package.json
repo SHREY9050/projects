@@ -1,0 +1,2 @@
+{"name":"fitflow-frontend","private":true,"version":"1.0.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0 --port 5173","build":"vite build"},"dependencies":{"@react-keycloak/web":"3.4.0","keycloak-js":"26.2.1","react":"19.1.0","react-dom":"19.1.0","recharts":"2.15.3"},"devDependencies":{"vite":"6.3.5"}}
+
