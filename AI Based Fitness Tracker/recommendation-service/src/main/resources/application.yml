@@ -1,0 +1,12 @@
+server: { port: 8083 }
+spring:
+  application: { name: recommendation-service }
+  config: { import: optional:configserver:http://localhost:8888 }
+  data: { mongodb: { uri: mongodb://localhost:27017/fitflow_recommendations } }
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer: { group-id: fitflow-recommendations, key-deserializer: org.apache.kafka.common.serialization.StringDeserializer, value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer, properties: { spring.json.trusted.packages: com.fitflow.recommendations, spring.json.value.default.type: com.fitflow.recommendations.ActivityEvent } }
+  security: { oauth2: { resourceserver: { jwt: { issuer-uri: http://localhost:8180/realms/fitflow } } } }
+gemini: { api-key: ${GEMINI_API_KEY:}, model: ${GEMINI_MODEL:gemini-1.5-flash} }
+eureka: { client: { service-url: { defaultZone: http://localhost:8761/eureka } } }
+
