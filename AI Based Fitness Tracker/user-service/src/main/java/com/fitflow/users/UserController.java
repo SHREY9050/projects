@@ -1,0 +1,8 @@
+package com.fitflow.users;
+import java.util.*;import org.springframework.http.ResponseEntity;import org.springframework.security.core.annotation.AuthenticationPrincipal;import org.springframework.security.oauth2.jwt.Jwt;import org.springframework.web.bind.annotation.*;
+@RestController @RequestMapping("/api/users") public class UserController { private final UserProfileRepository profiles; public UserController(UserProfileRepository profiles){this.profiles=profiles;}
+ @GetMapping("/me") public ResponseEntity<?> me(@AuthenticationPrincipal Jwt jwt){String id=jwt.getSubject();var profile=profiles.findById(id).orElseGet(()->profiles.save(new UserProfile(id,jwt.getClaimAsString("email"),jwt.getClaimAsString("given_name"),jwt.getClaimAsString("family_name"),roles(jwt).stream().findFirst().orElse("USER"))));return ResponseEntity.ok(view(profile));}
+ @GetMapping public ResponseEntity<?> all(@AuthenticationPrincipal Jwt jwt){if(!roles(jwt).contains("ADMIN"))return ResponseEntity.status(403).body(Map.of("error","Administrator access is required"));return ResponseEntity.ok(profiles.findAll().stream().map(this::view));}
+ private Set<String> roles(Jwt jwt){Map<String,Object> realm=jwt.getClaimAsMap("realm_access");if(realm==null||!(realm.get("roles") instanceof Collection<?> c))return Set.of("USER");return c.stream().map(Object::toString).collect(java.util.stream.Collectors.toSet());}
+ private Map<String,Object> view(UserProfile p){return Map.of("id",p.getId(),"email",Optional.ofNullable(p.getEmail()).orElse(""),"firstName",Optional.ofNullable(p.getFirstName()).orElse(""),"lastName",Optional.ofNullable(p.getLastName()).orElse(""),"role",Optional.ofNullable(p.getRole()).orElse("USER"),"createdAt",p.getCreatedAt());}}
+
